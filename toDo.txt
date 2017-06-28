@@ -1,0 +1,15 @@
+To do:
+1 - Exceção para opção no menu principal
+2 - Exceção para opção no menu produtos
+3 - Exceção para opção no menu produtos
+4 - Exceção nos campos de cadastro de bebidas, CD, doce, DVD, Fruta, Livro, Salgado
+5 - Exceção para remover produto
+6 - Exceção para opção no menu de notas fiscais
+7 - Exceção para opção no menu de fornecedores
+8 - Exceção para tipo da chave de busca para fornecimento
+9 - Exceção para campos do cadastro de um novo fornecimento
+10 - Exceção para o menu de carrinho
+11 - Exceção para chave de busca em inserir carrinho (possivelmente igual o item 8)
+12 - Exceção para remover do carrinho (possivelmente como o item 5)
+13 - Exceção para listar carrinho vazio
+14 - Exceção para finalizar compra

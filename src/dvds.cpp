@@ -62,6 +62,7 @@ void DVDs::setDuracao(int min){ minutos = min; } //duracao
 /**@brief Cria um dvd
 	*param key A chave que sera associada ao dvd */
 void DVDs::criar(int key){
+	bool cinFlag;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -69,10 +70,36 @@ void DVDs::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome do DVD: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario do DVD: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque do DVD: ";
-	cin >> auxI;
+
+
+	do{
+		cout << "Digite o preco unitario do DVD: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+
+	do{
+		cout << "Digite a quantidade em estoque do DVD: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(4);
 	setChave(key);
@@ -89,7 +116,18 @@ void DVDs::criar(int key){
 	getline(cin, auxS);
 	setGenero(auxS);
 
-	cout << "Digite a duracao em minutos do DVD: ";
-	cin >> auxI;
+	do{
+		cout << "Digite a duracao em minutos do DVD: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 	setDuracao(auxI);
 }

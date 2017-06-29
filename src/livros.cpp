@@ -71,6 +71,7 @@ void Livros::setLancamento(int aa){ anoLancamento = aa; }
 /**@brief Cria um livro
 	*param key A chave que sera associada ao livro */
 void Livros::criar(int key){
+	bool cinFlag;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -78,10 +79,35 @@ void Livros::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome do livro: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario do livro: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque do livro: ";
-	cin >> auxI;
+	
+	do{
+		cout << "Digite o preco unitario do livro: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+
+	do{
+		cout << "Digite a quantidade em estoque do livro: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(6);
 	setChave(key);
@@ -102,7 +128,17 @@ void Livros::criar(int key){
 	getline(cin, auxS);
 	setEditora(auxS);
 
-	cout << "Digite o ano de lancamento do livro: ";
-	cin >> auxI;
+	do{
+		cout << "Digite o ano de lancamento do livro: ";
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 	setLancamento(auxI);
 }

@@ -62,6 +62,7 @@ void Salgados::setLactose(bool lt){ lactose = lt; }
 /**@brief Cria um salgado
 	*param key A chave que sera associada ao salgado */
 void Salgados::criar(int key){
+	bool cinFlag;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -69,10 +70,34 @@ void Salgados::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome do salgado: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario do salgado: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque do salgado: ";
-	cin >> auxI;
+	
+	do{
+		cout << "Digite o preco unitario do salgado: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+	do{
+		cout << "Digite a quantidade em estoque do salgado: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(7);
 	setChave(key);
@@ -80,23 +105,96 @@ void Salgados::criar(int key){
 	setPrecoUnit(auxF);
 	setQtdEstoque(auxI);
 
-	cout << "Digite a quantidade de sodio no salgado: ";
-	cin >> auxF;
+	do{
+		cout << "Digite a quantidade de sodio no salgado: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<0);
 	setQtdSodio(auxF);
 
 	do{
 		cout << "Digite bool (0 ou 1) para ter lactose: ";
-		cin >> auxI;
-	}while(auxI!=0 and auxI!=1);
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0 or auxI>1);
 	setLactose(auxI);
 
 	do{
 		cout << "Digite bool (0 ou 1) para ter gluten: ";
-		cin >> auxI;
-	}while(auxI!=0 and auxI!=1);
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0 or auxI>1);
 	setGluten(auxI);
 
-	cout << "Digite a data de validade do salgado: ";
-	cin >> auxS;
-	getValidade()->string2Data(auxS);
+	int diaAux, mesAux, anoAux;
+	//do{
+	cout << "Digite a data de validade do salgado: " << endl;
+	do{
+		cout << "Dia: ";
+		cinFlag = true;
+		try{
+			cin >> diaAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or diaAux<1 or diaAux>31);
+
+	do{
+		cout << "Mes: ";
+		cinFlag = true;
+		try{
+			cin >> mesAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or mesAux<1 or mesAux>12);
+
+	do{
+		cout << "Ano: ";
+		cinFlag = true;
+		try{
+			cin >> anoAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
+	Data d(diaAux, mesAux, anoAux);
+	setValidade(d);
 }

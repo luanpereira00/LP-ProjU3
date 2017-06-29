@@ -62,6 +62,7 @@ void CDs::setArtista(string t){ artista = t; }
 /**@brief Cria um cd
 	*param key A chave que sera associada ao cd */
 void CDs::criar(int key){
+	bool cinFlag = true;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -69,10 +70,34 @@ void CDs::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome do CD: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario do CD: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque do CD: ";
-	cin >> auxI;
+	
+	do{
+		cout << "Digite o preco unitario do CD: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+	do{
+		cout << "Digite a quantidade em estoque do CD: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(2);
 	setChave(key);

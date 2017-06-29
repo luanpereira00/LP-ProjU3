@@ -66,6 +66,7 @@ void Doces::setLactose(bool lt){ lactose = lt; }
 /**@brief Cria um doce
 	*param key A chave que sera associada ao doce */
 void Doces::criar(int key){
+	bool cinFlag = true;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -73,10 +74,34 @@ void Doces::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome do doce: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario do doce: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque do doce: ";
-	cin >> auxI;
+
+	do{
+		cout << "Digite o preco unitario do doce: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+	do{
+		cout << "Digite a quantidade em estoque do doce: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(3);
 	setChave(key);
@@ -84,24 +109,96 @@ void Doces::criar(int key){
 	setPrecoUnit(auxF);
 	setQtdEstoque(auxI);
 
-	cout << "Digite a quantidade de acucar no doce: ";
-	cin >> auxF;
+	do{
+		cout << "Digite a quantidade de acucar no doce: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<0);
 	setQtdAcucar(auxF);
 
 	do{
 		cout << "Digite bool (0 ou 1) para ter lactose: ";
-		cin >> auxI;
-	}while(auxI!=0 and auxI!=1);
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0 or auxI>1);
 	setLactose(auxI);
 
 	do{
 		cout << "Digite bool (0 ou 1) para ter gluten: ";
-		cin >> auxI;
-	}while(auxI!=0 and auxI!=1);
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0 or auxI>1);
 	setGluten(auxI);
 
-	cin.ignore();
-	cout << "Digite a data de validade do doce: ";
-	cin >> auxS;
-	getValidade()->string2Data(auxS);
+	int diaAux, mesAux, anoAux;
+	//do{
+	cout << "Digite a data de validade do doce: " << endl;
+	do{
+		cout << "Dia: ";
+		cinFlag = true;
+		try{
+			cin >> diaAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or diaAux<1 or diaAux>31);
+
+	do{
+		cout << "Mes: ";
+		cinFlag = true;
+		try{
+			cin >> mesAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or mesAux<1 or mesAux>12);
+
+	do{
+		cout << "Ano: ";
+		cinFlag = true;
+		try{
+			cin >> anoAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
+	Data d(diaAux, mesAux, anoAux);
+	setValidade(d);
 }

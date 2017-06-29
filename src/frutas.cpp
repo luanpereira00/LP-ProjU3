@@ -56,6 +56,7 @@ void Frutas::setDataLote(Data dl){ dataDeLote = dl; }
 /**@brief Cria uma fruta
 	*param key A chave que sera associada a fruta */
 void Frutas::criar(int key){
+	bool cinFlag;
 	int auxI;
 	float auxF;
 	string auxS;
@@ -63,10 +64,33 @@ void Frutas::criar(int key){
 	cin.ignore();
 	cout << "Digite o nome da fruta: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario da fruta: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque da fruta: ";
-	cin >> auxI;
+	do{
+		cout << "Digite o preco unitario da fruta: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+	do{
+		cout << "Digite a quantidade em estoque da fruta: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(5);
 	setChave(key);
@@ -79,11 +103,98 @@ void Frutas::criar(int key){
 	getline(cin, auxS);
 	setLote(auxS);
 
-	cout << "Digite a data do lote: ";
-	cin >> auxS;
-	getDataLote()->string2Data(auxS);
+	int diaAux, mesAux, anoAux;
+	//do{
+	cout << "Digite a data do lote: " << endl;
+	do{
+		cout << "Dia: ";
+		cinFlag = true;
+		try{
+			cin >> diaAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or diaAux<1 or diaAux>31);
 
-	cout << "Digite a data de validade da fruta: ";
-	cin >> auxS;
-	getValidade()->string2Data(auxS);
+	do{
+		cout << "Mes: ";
+		cinFlag = true;
+		try{
+			cin >> mesAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or mesAux<1 or mesAux>12);
+
+	do{
+		cout << "Ano: ";
+		cinFlag = true;
+		try{
+			cin >> anoAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
+	Data l(diaAux, mesAux, anoAux);
+	setDataLote(l);
+	
+
+	cout << "Digite a data de validade da fruta: " << endl;
+	do{
+		cout << "Dia: ";
+		cinFlag = true;
+		try{
+			cin >> diaAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or diaAux<1 or diaAux>31);
+
+	do{
+		cout << "Mes: ";
+		cinFlag = true;
+		try{
+			cin >> mesAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or mesAux<1 or mesAux>12);
+
+	do{
+		cout << "Ano: ";
+		cinFlag = true;
+		try{
+			cin >> anoAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
+	Data d(diaAux, mesAux, anoAux);
+	setValidade(d);
 }

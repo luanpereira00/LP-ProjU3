@@ -2,7 +2,7 @@ To do:
 DONE 1 - Exceção para opção no menu principal
 DONE 2 - Exceção para opção no menu produtos
 DONE 3 - Exceção para opções de produtos no sistema
-4 - Exceção nos campos de cadastro de bebidas, CD, doce, DVD, Fruta, Livro, Salgado
+DONE 4 - Exceção nos campos de cadastro de bebidas, CD, doce, DVD, Fruta, Livro, Salgado
 DONE 5 - Exceção para remover produto
 DONE 6 - Exceção para opção no menu de notas fiscais
 DONE 7 - Exceção para opção no menu de fornecedores

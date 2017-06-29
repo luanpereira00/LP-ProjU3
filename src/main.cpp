@@ -19,6 +19,7 @@ using std::string;
 #include "notafiscal.h"
 #include "carrinho.h"
 #include "menu.h"
+#include "exceptions.h"
 
 /**@brief Funcao principal */
 int main (){

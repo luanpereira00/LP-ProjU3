@@ -56,12 +56,12 @@ exec: $(OBJ_DIR)/main.o $(OBJ_DIR)/fornecedores.o $(OBJ_DIR)/carrinho.o $(OBJ_DI
 #$(SRC_DIR)/pereciveis.cpp $(SRC_DIR)/produtos.cpp  $(INC_DIR)/pereciveis.h $(INC_DIR)/produtos.h
 # Alvo (target) para a construcao do objeto main.o
 # Define os arquivos main.cpp, pereciveis.cpp, produtos.cpp, bebidas.cpp, cds.cpp, data.cpp, doces.cpp, dvds.cpp, frutas.cpp, libros.cpp, salgados.cpp, pereciveis.h, produtos.h, bebidas.h, cds.h, data.h, doces.h, dvds.h, frutas.h, livros.h e salgados.h como dependencias.
-$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(INC_DIR)/fornecedores.h $(INC_DIR)/menu.h $(INC_DIR)/estoque.h $(INC_DIR)/carrinho.h $(INC_DIR)/notafiscal.h
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(INC_DIR)/fornecedores.h $(INC_DIR)/menu.h $(INC_DIR)/estoque.h $(INC_DIR)/carrinho.h $(INC_DIR)/notafiscal.h $(INC_DIR)/exceptions.h
 	$(CC) -c $(CFLAGS) -o $@ $<	
 
 # Alvo (target) para a construcao do objeto pereciveis.o
 # Define os arquivos menu.cpp, menu.h, data.cpp e data.h como dependencias.
-$(OBJ_DIR)/menu.o: $(SRC_DIR)/menu.cpp $(INC_DIR)/menu.h
+$(OBJ_DIR)/menu.o: $(SRC_DIR)/menu.cpp $(INC_DIR)/menu.h $(INC_DIR)/exceptions.h
 	$(CC) -c $(CFLAGS) -o $@ $<	
 
 # Alvo (target) para a construcao do objeto pereciveis.o
@@ -71,7 +71,7 @@ $(OBJ_DIR)/fornecedores.o: $(SRC_DIR)/fornecedores.cpp $(INC_DIR)/fornecedores.h
 
 # Alvo (target) para a construcao do objeto pereciveis.o
 # Define os arquivos menu.cpp, menu.h, data.cpp e data.h como dependencias.
-$(OBJ_DIR)/estoque.o: $(SRC_DIR)/estoque.cpp $(INC_DIR)/menu.h $(INC_DIR)/estoque.h $(INC_DIR)/lista.h $(INC_DIR)/bebidas.h $(INC_DIR)/cds.h $(INC_DIR)/data.h $(INC_DIR)/doces.h $(INC_DIR)/dvds.h $(INC_DIR)/frutas.h $(INC_DIR)/livros.h $(INC_DIR)/salgados.h
+$(OBJ_DIR)/estoque.o: $(SRC_DIR)/estoque.cpp $(INC_DIR)/menu.h $(INC_DIR)/exceptions.h $(INC_DIR)/estoque.h $(INC_DIR)/lista.h $(INC_DIR)/bebidas.h $(INC_DIR)/cds.h $(INC_DIR)/data.h $(INC_DIR)/doces.h $(INC_DIR)/dvds.h $(INC_DIR)/frutas.h $(INC_DIR)/livros.h $(INC_DIR)/salgados.h
 	$(CC) -c $(CFLAGS) -o $@ $<	
 
 # Alvo (target) para a construcao do objeto pereciveis.o

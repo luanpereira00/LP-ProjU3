@@ -26,6 +26,7 @@ using std::cerr;
 #include "frutas.h"
 #include "livros.h"
 #include "salgados.h"
+#include "exceptions.h"
 
 /** 
  * @class 	Estoque estoque.h

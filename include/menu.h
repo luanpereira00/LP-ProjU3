@@ -9,6 +9,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "exceptions.h"
 /**
 @brief Menu Princial
 @details Direciona para Produtos, Nota Fiscal, Fornecedores e Venda

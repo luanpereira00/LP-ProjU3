@@ -17,9 +17,11 @@ using std::endl;
 #include <exception>
 using std::exception;
 
-#include "removerVazio.h"
+#include "impossivelRemover.h"
 #include "imprimirVazio.h"
 #include "opcaoInvalida.h"
 #include "falhaLeitura.h"
+#include "produtoNaoEncontrado.h"
+#include "produtoNaoIdentificado.h"
 
 #endif

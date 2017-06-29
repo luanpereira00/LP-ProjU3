@@ -43,22 +43,29 @@ void Estoque::setListaProd(lista<Produtos*> *ll){ ll_Prod = ll;}
 void Estoque::listarEstoque(){ 
  	cout << "======================================" << endl;
 	cout << "--- Lista de Estoque ---" << endl << endl;
-	if(ll_Prod->contarElementos()>0) {
-		//cout << "Lista de Prod: " << endl;
-		ll_Prod->imprimirTela();
-	} else cout << "A lista esta vazia..." << endl;
-	//cout << "-----------------------" << endl;
+	try{
+		if(ll_Prod->contarElementos()>0) {
+			//cout << "Lista de Prod: " << endl;
+			ll_Prod->imprimirTela();
+		} else throw ImprimirTEDVazio();
+	}catch(ImprimirTEDVazio &ex){
+		cerr << ex.what() << endl;
+	}
 }
 
 /**@brief Lista todo o estoque detalhadamente */
 void Estoque::listarEstoqueDetalhado(){ 
  	cout << "======================================" << endl;
 	cout << "--- Lista de Estoque Detalhada ---" << endl << endl;
-	if(ll_Prod->contarElementos()>0) {
-		//cout << "Lista de Prod: " << endl;
-		ll_Prod->imprimir();
-	} else cout << "A lista esta vazia..." << endl;
-	//cout << "-----------------------" << endl;
+	try{
+		if(ll_Prod->contarElementos()>0) {
+			//cout << "Lista de Prod: " << endl;
+			ll_Prod->imprimir();
+		} else throw ImprimirTEDVazio();
+	}catch(ImprimirTEDVazio &ex){
+		cerr << ex.what() << endl;
+	}
+
 }
 
 /**@brief Le os dados da memoria para inicializar o estoque  */
@@ -84,47 +91,47 @@ void Estoque::lerDados(){
 		//cout << qtdLista;
 		prod.ignore();
 		while(iter<qtdLista) {
-			getline(prod, tipo, ';');
-			if(tipo=="1"){
-				b = new Bebidas;
-				prod >> *b;
-				//cout << *b << endl;
-				getListaProd()->inserir(b);
-			}else if (tipo=="2"){
-				c = new CDs;
-				prod >> *c;
-				//cout << *c << endl;
-				getListaProd()->inserir(c);
-			}else if (tipo=="3"){
-				d = new Doces;
-				prod >> *d;
-				//cout << *d << endl;
-				getListaProd()->inserir(d);
-			}else if (tipo=="4"){
-				v = new DVDs;
-				prod >> *v;
-				//cout << *v << endl;
-				getListaProd()->inserir(v);
-			}else if (tipo=="5"){
-				f = new Frutas;
-				prod >> *f;
-				//cout << *f << endl;
-				getListaProd()->inserir(f);
-			}else if (tipo=="6"){
-				l = new Livros;
-				prod >> *l;
-				//cout << *l << endl;
-				getListaProd()->inserir(l);
-			}else if (tipo=="7"){
-				s = new Salgados;
-				prod >> *s;
-				//cout << *s << endl;
-				getListaProd()->inserir(s);
-			}else {
-				cerr << "ERRO - TIPO DE PRODUTO NAO IDENTIFICADO! NADA A FAZER..." << endl;
-				//exit(1);
+			try{
+				getline(prod, tipo, ';');
+				if(tipo=="1"){
+					b = new Bebidas;
+					prod >> *b;
+					//cout << *b << endl;
+					getListaProd()->inserir(b);
+				}else if (tipo=="2"){
+					c = new CDs;
+					prod >> *c;
+					//cout << *c << endl;
+					getListaProd()->inserir(c);
+				}else if (tipo=="3"){
+					d = new Doces;
+					prod >> *d;
+					//cout << *d << endl;
+					getListaProd()->inserir(d);
+				}else if (tipo=="4"){
+					v = new DVDs;
+					prod >> *v;
+					//cout << *v << endl;
+					getListaProd()->inserir(v);
+				}else if (tipo=="5"){
+					f = new Frutas;
+					prod >> *f;
+					//cout << *f << endl;
+					getListaProd()->inserir(f);
+				}else if (tipo=="6"){
+					l = new Livros;
+					prod >> *l;
+					//cout << *l << endl;
+					getListaProd()->inserir(l);
+				}else if (tipo=="7"){
+					s = new Salgados;
+					prod >> *s;
+					//cout << *s << endl;
+					getListaProd()->inserir(s);
+				}else throw ProdutoNaoIdentificado();
+			} catch (ProdutoNaoIdentificado &ex){
+				cerr << ex.what() << endl;
 			}
-
 			iter++;
 		}
 		prod.close();
@@ -210,9 +217,13 @@ void Estoque::removerProduto(){
 	cin >> key;
 
 	P = getListaProd()->buscar(key);
-	if(P->prox->prox){
-		getListaProd()->remover(P->prox->dado);
-		cout << "Removido com sucesso!" << endl;
+	try{
+		if(P->prox->prox){
+			getListaProd()->remover(P->prox->dado);
+			cout << "Removido com sucesso!" << endl;
+		}
+		else throw ProdutoNaoEncontradoNaLista();
+	}catch(ProdutoNaoEncontradoNaLista &ex){
+		cerr << ex.what() << endl;
 	}
-	else cerr << "PRODUTO NAO ENCONTRADO! NADA A FAZER..."<< endl;
 }

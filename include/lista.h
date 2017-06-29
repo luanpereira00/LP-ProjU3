@@ -18,6 +18,8 @@ using std::endl;
 using std::ofstream;
 using std::ifstream;
 
+#include "exceptions.h"
+
 /** @brief Declaracao de template para o tipo T*/
 template <typename T>
 
@@ -108,19 +110,23 @@ public:
 		//cout << endl;
 		//cout << "Removendo o elemento " << el << endl;
 		node<T>* it = buscar(el);
-		if(it->prox->dado==el){
-			node<T>* tmp = new node<T>;
-			tmp->prox=it->prox->prox;
-			tmp->anter=it;
+		try{
+			if(it->prox->dado==el){
+				node<T>* tmp = new node<T>;
+				tmp->prox=it->prox->prox;
+				tmp->anter=it;
 
-			delete it->prox; 
+				delete it->prox; 
 
-			it->prox=tmp->prox;
-			it->prox->anter=tmp->anter;
+				it->prox=tmp->prox;
+				it->prox->anter=tmp->anter;
 
-			delete tmp; 
+				delete tmp; 
+			}
+			else throw ImpossivelRemoverElemento();
+		} catch(ImpossivelRemoverElemento &ex){
+			cerr << ex.what() << endl;
 		}
-		else cerr << "ERRO: Impossivel remover o elemento " << el << " (nao existe na lista)! ...Continuando operacoes" << endl;
 	}
 
 	/** 

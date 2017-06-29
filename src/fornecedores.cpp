@@ -111,29 +111,55 @@ int Fornecedores::getLastFornecedores(){
 /**@brief Cria um novo fornecimento
 *@param e O estoque de produtos */ 
 void Fornecedores::criar(Estoque *e){
-	
+	bool cinFlag = true;
 	node<Produtos*>* E;
 
 	e->getListaProd()->imprimirTela();
-
-	cout << "Digite a chave de busca: ";
-	cin >> chaveProduto;
+	do{
+		cout << "Digite a chave de busca: ";
+		cinFlag = true;
+		try{
+			cin >> chaveProduto;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}
+	while(!cinFlag);
 
 	E = e->getListaProd()->buscar(chaveProduto);
-
-	if(E->prox->prox){
-		cin.ignore();
-		cout << "Digite o nome da empresa: ";
-		getline(cin, nomeEmpresa);
-		
-		do{
-			cout << "Digite a quantidade da entrega: ";
-			cin >> qtdProduto;
-		}while(qtdProduto<1);
-		E->prox->dado->setQtdEstoque(E->prox->dado->getQtdEstoque()+qtdProduto);
-		imprimirArquivo();
-		cout << "ENTREGA CONCLUIDA COM SUCESSO! CONTINUANDO OPERACOES..." << endl;
-	} else cerr << "CHAVE NAO ENCONTRADA! NADA A FAZER..." << endl;
+	try{
+		if(E->prox->prox){
+			cin.ignore();
+			cout << "Digite o nome da empresa: ";
+			getline(cin, nomeEmpresa);
+			
+			do{
+				do{
+					cout << "Digite a quantidade da entrega: ";
+					cinFlag = true;
+					try{
+						cin >> qtdProduto;
+						if(cin.fail()) throw FalhaDeLeitura();
+					} catch(FalhaDeLeitura &ex){
+						cerr << ex.what() << endl;
+						cin.clear();
+						cin.ignore();
+						cinFlag=false;
+					}
+				}while(!cinFlag);
+				if(qtdProduto<1) cerr << "Entrega com menos de 1 produto? Tente entregar mais de 1!" << endl;
+			}while(qtdProduto<1);
+			E->prox->dado->setQtdEstoque(E->prox->dado->getQtdEstoque()+qtdProduto);
+			imprimirArquivo();
+			cout << "ENTREGA CONCLUIDA COM SUCESSO! CONTINUANDO OPERACOES..." << endl;
+		} else throw ProdutoNaoEncontradoNaLista();
+	} catch (ProdutoNaoEncontradoNaLista &ex){
+		cerr << ex.what() << endl;
+	}
 	
 }	
 

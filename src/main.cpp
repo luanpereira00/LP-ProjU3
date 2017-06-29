@@ -76,8 +76,7 @@ int main (){
 					flag=true;
 					switch(menuFornecedores()){
 						case 1:
-							fornec->criar(e);
-							flag = false;	
+							fornec->criar(e);	
 						break;
 						case 2:
 						fornec->lerArquivo();

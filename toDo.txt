@@ -6,7 +6,7 @@ DONE 3 - Exceção para opções de produtos no sistema
 DONE 5 - Exceção para remover produto
 DONE 6 - Exceção para opção no menu de notas fiscais
 DONE 7 - Exceção para opção no menu de fornecedores
-8 - Exceção para tipo da chave de busca para fornecimento
+DONE 8 - Exceção para tipo da chave de busca para fornecimento
 9 - Exceção para campos do cadastro de um novo fornecimento
 DONE 10 - Exceção para o menu de carrinho
 11 - Exceção para chave de busca em inserir carrinho (possivelmente igual o item 8)

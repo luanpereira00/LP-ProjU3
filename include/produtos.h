@@ -25,6 +25,8 @@ using std::ostream;
 #include <istream> 
 using std::istream;
 
+#include "exceptions.h"
+
 /** 
  * @class 	Produtos produtos.h
  * @brief 	Classe que representa Produtos

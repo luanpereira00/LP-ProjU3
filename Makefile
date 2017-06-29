@@ -91,7 +91,7 @@ $(OBJ_DIR)/pereciveis.o: $(SRC_DIR)/pereciveis.cpp $(INC_DIR)/pereciveis.h $(INC
 
 # Alvo (target) para a construcao do objeto produtos.o
 # Define os arquivos produtos.cpp e produtos.h como dependencias.
-$(OBJ_DIR)/produtos.o: $(SRC_DIR)/produtos.cpp $(INC_DIR)/produtos.h
+$(OBJ_DIR)/produtos.o: $(SRC_DIR)/produtos.cpp $(INC_DIR)/produtos.h $(INC_DIR)/exceptions.h
 	$(CC) -c $(CFLAGS) -o $@ $<		
 
 # Alvo (target) para a construcao do objeto data.o

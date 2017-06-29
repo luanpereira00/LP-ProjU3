@@ -66,17 +66,43 @@ void Bebidas::setVolumeTotal(int v){ volumeTotal = v; }
 /**@brief Cria uma bebida
 	*param key A chave que sera associada a bebida */
 void Bebidas::criar(int key){
+	bool cinFlag;
 	int auxI;
 	float auxF;
 	string auxS;
+	
 
 	cin.ignore();
 	cout << "Digite o nome da bebida: ";
 	getline(cin, auxS);
-	cout << "Digite o preco unitario da bebida: ";
-	cin >> auxF;
-	cout << "Digite a quantidade em estoque da bebida: ";
-	cin >> auxI;
+
+	do{
+		cout << "Digite o preco unitario da bebida: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<=0);
+
+	do{
+		cout << "Digite a quantidade em estoque da bebida: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI<0);
 
 	setTipo(1);
 	setChave(key);
@@ -84,19 +110,99 @@ void Bebidas::criar(int key){
 	setPrecoUnit(auxF);
 	setQtdEstoque(auxI);
 
-	cout << "Digite o teor alcoolico da bebida: ";
-	cin >> auxF;
+	do{
+		cout << "Digite o teor alcoolico da bebida: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<0);
 	setTeorAlcoolico(auxF);
 
-	cout << "Digite a quantidade de acucar da bebida: ";
-	cin >> auxF;
+
+	do{
+		cout << "Digite a quantidade de acucar da bebida: ";
+		cinFlag = true;
+		try{
+			cin >> auxF;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxF<0);
 	setQtdAcucar(auxF);
 
-	cout << "Digite o volume total da bebida: ";
-	cin >> auxI;
+	do{
+		cout << "Digite o volume total da bebida: ";
+		cinFlag = true;
+		try{
+			cin >> auxI;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or auxI < 0);
 	setVolumeTotal(auxI);
-	cout << "Digite a data de validade da bebida: ";
-	cin >> auxS;
-	getValidade()->string2Data(auxS);
+
+	int diaAux, mesAux, anoAux;
+	//do{
+	cout << "Digite a data de validade da bebida: " << endl;
+	do{
+		cout << "Dia: ";
+		cinFlag = true;
+		try{
+			cin >> diaAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or diaAux<1 or diaAux>31);
+
+	do{
+		cout << "Mes: ";
+		cinFlag = true;
+		try{
+			cin >> mesAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag or mesAux<1 or mesAux>12);
+
+	do{
+		cout << "Ano: ";
+		cinFlag = true;
+		try{
+			cin >> anoAux;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
+	Data d(diaAux, mesAux, anoAux);
+	setValidade(d);
+		
 }
 

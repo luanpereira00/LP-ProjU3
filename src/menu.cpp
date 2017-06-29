@@ -23,7 +23,7 @@ using std::string;
 @return Retorna a escolha do usuario
 */
 int menuPrincipal(){
-	int result;
+	int result = -1;
 	do{
 		try{
 			cout << "=======================================" << endl;
@@ -34,7 +34,15 @@ int menuPrincipal(){
 			cout << "4 - Iniciar Venda" << endl;
 			cout << "0 - Sair" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 			if(result<0 or result>4) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;
@@ -61,7 +69,15 @@ int menuProdutos(){
 			cout << "4 - Listar Detalhadamente os Produtos Cadastrados" << endl;
 			cout << "0 - Voltar" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 		if(result<0 or result>4) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;
@@ -86,7 +102,15 @@ int menuFornecedores(){
 			cout << "2 - Listar Todos os Fornecimentos Encontrados" << endl;
 			cout << "0 - Voltar" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 		if(result<0 or result>2) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;
@@ -110,7 +134,15 @@ int menuNotaFiscal(){
 			cout << "1 - Listar Notas Fiscais" << endl;
 			cout << "0 - Voltar" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 		if(result<0 or result>1) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;
@@ -138,7 +170,15 @@ int menuCarrinho(){
 			cout << "4 - Finalizar compra" << endl;
 			cout << "0 - Voltar" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 		if(result<0 or result>4) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;
@@ -169,7 +209,15 @@ int menuOpcoesProdutos(){
 			cout << "7 - Salgado" << endl;
 			cout << "0 - Voltar" << endl;
 			cout << "Opcao: ";
-			cin >> result;
+			try{
+				cin >> result;
+				if(cin.fail()) throw FalhaDeLeitura();
+			} catch(FalhaDeLeitura &ex){
+				cerr << ex.what() << endl;
+				cin.clear();
+				cin.ignore();
+				result = -1;
+			}
 		if(result<0 or result>7) throw opcaoInvalida();
 		} catch(opcaoInvalida &ex){
 			cerr << ex.what() << endl;

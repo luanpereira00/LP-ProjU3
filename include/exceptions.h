@@ -20,5 +20,6 @@ using std::exception;
 #include "removerVazio.h"
 #include "imprimirVazio.h"
 #include "opcaoInvalida.h"
+#include "falhaLeitura.h"
 
 #endif

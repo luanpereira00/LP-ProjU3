@@ -54,15 +54,22 @@ int Carrinho::verUltimaNotaFiscal(){
 
 /**@brief Lista o carrinho */
 void Carrinho::listar(){
-	cout << "-----------------------" << endl;
-	cout << "Carrinho: " << endl << endl;
-	if(getListaProd()->contarElementos()>0) {
-		getListaProd()->imprimirTela();
-		cout << "Total do carrinho: " << getPrecoCompra() << endl;
-	}
-	else cout << "Carrinho vazio..." << endl;
 	
-	cout << "-----------------------" << endl;
+	try{
+		if(getListaProd()->contarElementos()>0) {
+			cout << "-----------------------" << endl;
+			cout << "Carrinho: " << endl << endl;
+			getListaProd()->imprimirTela();
+			cout << "Total do carrinho: " << getPrecoCompra() << endl;
+
+			cout << "-----------------------" << endl;
+		}
+		else throw ImprimirTEDVazio();
+	} catch (ImprimirTEDVazio &ex){
+		cerr << ex.what() << endl;
+	}
+	
+	
 }
 
 /**@brief Limpa o carrinho */
@@ -92,113 +99,149 @@ void Carrinho::adicionarProduto(Estoque *e){
 	cout << "Digite a chave de busca: ";
 	cin >> key;
 	E = e->getListaProd()->buscar(key);
-	if(E->prox->prox){
-		//cout << "Produto encontrado..." << endl;
-		cout << "Digite a quantidade para adicionar ao carrinho: ";
-		cin >> qtd;
-		tipo = E->prox->dado->getTipo();
-		
-		if(E->prox->dado->getQtdEstoque()-qtd>=0){
-			E->prox->dado->setQtdEstoque(E->prox->dado->getQtdEstoque()-qtd);
-			switch(tipo){
-				case 1: 
-					b = new Bebidas;
-					*b = dynamic_cast<Bebidas&>(*E->prox->dado);
-					calcularCompra(b->getPrecoUnit()*qtd);
-				break;
-				case 2: 
-					c = new CDs;
-					*c = dynamic_cast<CDs&>(*E->prox->dado);
-					calcularCompra(c->getPrecoUnit()*qtd);
-				break;
-				case 3: 
-					d = new Doces;
-					*d = dynamic_cast<Doces&>(*E->prox->dado);
-					calcularCompra(d->getPrecoUnit()*qtd);
-				break;
-				case 4: 
-					v = new DVDs;
-					*v = dynamic_cast<DVDs&>(*E->prox->dado);
-					calcularCompra(v->getPrecoUnit()*qtd);
-				break;
-				case 5: 
-					f = new Frutas;
-					*f = dynamic_cast<Frutas&>(*E->prox->dado);
-					calcularCompra(f->getPrecoUnit()*qtd);
-				break;
-				case 6: 
-					l = new Livros;
-					*l = dynamic_cast<Livros&>(*E->prox->dado);
-					calcularCompra(l->getPrecoUnit()*qtd);
-				break;
-				case 7: 
-					s = new Salgados;
-					*s = dynamic_cast<Salgados&>(*E->prox->dado);
-					calcularCompra(s->getPrecoUnit()*qtd);
-				break;
-				default:
-				break;
-			}			
+	try{
+		if(E->prox->prox){
+			bool cinFlag = true;
+			//cout << "Produto encontrado..." << endl;
+			do{
+				cout << "Digite a quantidade para adicionar ao carrinho: ";
+				cinFlag = true;
+				try{
+					cin >> qtd;
+					if(cin.fail()) throw FalhaDeLeitura();
+				} catch(FalhaDeLeitura &ex){
+					cerr << ex.what() << endl;
+					cin.clear();
+					cin.ignore();
+					cinFlag=false;
+				}
+			}while(!cinFlag);
+
+			tipo = E->prox->dado->getTipo();
 			
-			C = getListaProd()->buscar(key);
-			if(!C->prox->prox) {
+			if(E->prox->dado->getQtdEstoque()-qtd>=0){
+				E->prox->dado->setQtdEstoque(E->prox->dado->getQtdEstoque()-qtd);
 				switch(tipo){
 					case 1: 
-						b->setQtdEstoque(qtd);
-						getListaProd()->inserir(b);
+						b = new Bebidas;
+						*b = dynamic_cast<Bebidas&>(*E->prox->dado);
+						calcularCompra(b->getPrecoUnit()*qtd);
 					break;
 					case 2: 
-						c->setQtdEstoque(qtd);
-						getListaProd()->inserir(c);
+						c = new CDs;
+						*c = dynamic_cast<CDs&>(*E->prox->dado);
+						calcularCompra(c->getPrecoUnit()*qtd);
 					break;
 					case 3: 
-						d->setQtdEstoque(qtd);
-						getListaProd()->inserir(d);
+						d = new Doces;
+						*d = dynamic_cast<Doces&>(*E->prox->dado);
+						calcularCompra(d->getPrecoUnit()*qtd);
 					break;
 					case 4: 
-						v->setQtdEstoque(qtd);
-						getListaProd()->inserir(v);
+						v = new DVDs;
+						*v = dynamic_cast<DVDs&>(*E->prox->dado);
+						calcularCompra(v->getPrecoUnit()*qtd);
 					break;
 					case 5: 
-						f->setQtdEstoque(qtd);
-						getListaProd()->inserir(f);
+						f = new Frutas;
+						*f = dynamic_cast<Frutas&>(*E->prox->dado);
+						calcularCompra(f->getPrecoUnit()*qtd);
 					break;
 					case 6: 
-						l->setQtdEstoque(qtd);
-						getListaProd()->inserir(l);
+						l = new Livros;
+						*l = dynamic_cast<Livros&>(*E->prox->dado);
+						calcularCompra(l->getPrecoUnit()*qtd);
 					break;
 					case 7: 
-						s->setQtdEstoque(qtd);
-						getListaProd()->inserir(s);
+						s = new Salgados;
+						*s = dynamic_cast<Salgados&>(*E->prox->dado);
+						calcularCompra(s->getPrecoUnit()*qtd);
 					break;
 					default:
 					break;
-				}
-				cout << "ADICIONADO COM SUCESSO!" << endl;
-			}else C->prox->dado->setQtdEstoque(C->prox->dado->getQtdEstoque()+qtd);
-		}else cerr << "NAO HA ESSA QUANTIDADE DE PRODUTOS NO ESTOQUE! NADA A FAZER..." << endl;
-	}	
+				}			
+				
+				C = getListaProd()->buscar(key);
+				if(!C->prox->prox) {
+					switch(tipo){
+						case 1: 
+							b->setQtdEstoque(qtd);
+							getListaProd()->inserir(b);
+						break;
+						case 2: 
+							c->setQtdEstoque(qtd);
+							getListaProd()->inserir(c);
+						break;
+						case 3: 
+							d->setQtdEstoque(qtd);
+							getListaProd()->inserir(d);
+						break;
+						case 4: 
+							v->setQtdEstoque(qtd);
+							getListaProd()->inserir(v);
+						break;
+						case 5: 
+							f->setQtdEstoque(qtd);
+							getListaProd()->inserir(f);
+						break;
+						case 6: 
+							l->setQtdEstoque(qtd);
+							getListaProd()->inserir(l);
+						break;
+						case 7: 
+							s->setQtdEstoque(qtd);
+							getListaProd()->inserir(s);
+						break;
+						default:
+						break;
+					}
+					cout << "ADICIONADO COM SUCESSO!" << endl;
+				}else C->prox->dado->setQtdEstoque(C->prox->dado->getQtdEstoque()+qtd);
+			}else cerr << "NAO HA ESSA QUANTIDADE DE PRODUTOS NO ESTOQUE! NADA A FAZER..." << endl;
+		} else throw ProdutoNaoEncontradoNaLista();	
+	} catch(ProdutoNaoEncontradoNaLista &ex){
+		cerr << ex.what() << endl;
+	}
 }
 
 	/**@brief Remove produtos do carrinho 
 	*@param e O estoque de produtos */
 void Carrinho::removerProduto(Estoque *e){
 	//cout << "--- Produtos Cadastrados ---" << endl;
+	bool cinFlag;
 	int key;
 	int qtd;
 	node<Produtos*> *P;
 	
 	getListaProd()->imprimirTela();
-	cout << "Digite a chave de busca: ";
-	cin >> key;
+
+	do{
+		cout << "Digite a chave de busca: ";
+		cinFlag = true;
+		try{
+			cin >> key;
+			if(cin.fail()) throw FalhaDeLeitura();
+		} catch(FalhaDeLeitura &ex){
+			cerr << ex.what() << endl;
+			cin.clear();
+			cin.ignore();
+			cinFlag=false;
+		}
+	}while(!cinFlag);
+
 	P = getListaProd()->buscar(key);
-	if(P->prox->prox){
-		qtd = P->prox->dado->getQtdEstoque();
-		getListaProd()->remover(P->prox->dado);
-		P = e->getListaProd()->buscar(key);
-		P->prox->dado->setQtdEstoque(P->prox->dado->getQtdEstoque()+qtd);
-		calcularCompra(P->prox->dado->getPrecoUnit()*qtd*(-1));
-	} else cerr << "PRODUTO NAO ENCONTRADO NO CARRINHO! NADA A FAZER..."<<endl;
+	try{
+		if(P->prox->prox){
+			qtd = P->prox->dado->getQtdEstoque();
+			getListaProd()->remover(P->prox->dado);
+			P = e->getListaProd()->buscar(key);
+			P->prox->dado->setQtdEstoque(P->prox->dado->getQtdEstoque()+qtd);
+			calcularCompra(P->prox->dado->getPrecoUnit()*qtd*(-1));
+			cout << "Removido com sucesso!" << endl;
+		} else throw ProdutoNaoEncontradoNaLista();
+	}catch(ProdutoNaoEncontradoNaLista &ex){
+		cerr << ex.what() << endl;
+	}
 }
 
 /**@brief Atualiza o preco da compra somando com um valor passado como argumento 
